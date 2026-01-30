@@ -1,0 +1,193 @@
+﻿<Window x:Class="StudyMateAI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        Title="StudyMate AI - Üniversite Çalışma Asistanı" 
+        Height="700" 
+        Width="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResize">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/> <!-- Sidebar -->
+            <ColumnDefinition Width="*"/>    <!-- Main Content -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar Menu (Column 0) -->
+        <Border Grid.Column="0" Background="{DynamicResource VoidBlueBrush}" MinWidth="220" BorderBrush="{DynamicResource MaterialDesignDivider}" BorderThickness="0,0,1,0">
+            <DockPanel>
+                <!-- Logo/Header -->
+                <StackPanel DockPanel.Dock="Top" Margin="20,30,20,20">
+                    <materialDesign:PackIcon Kind="School" 
+                                            Width="48" 
+                                            Height="48" 
+                                            HorizontalAlignment="Center" 
+                                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                    <TextBlock Text="StudyMate AI" 
+                              FontSize="20" 
+                              FontWeight="Bold" 
+                              HorizontalAlignment="Center" 
+                              Margin="0,10,0,0"/>
+                    <TextBlock Text="Çalışma Asistanı" 
+                              FontSize="12" 
+                              HorizontalAlignment="Center" 
+                              Opacity="0.7"/>
+                </StackPanel>
+
+                <!-- Menu Items -->
+                <ListBox x:Name="MenuListBox" 
+                        SelectionChanged="MenuListBox_SelectionChanged"
+                        SelectedIndex="0"
+                        Background="Transparent"
+                        BorderThickness="0">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="16"/>
+                            <Setter Property="Margin" Value="8,4,8,4"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource SlateDarkBrush}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource CyberTealBrush}"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ViewDashboard" Width="24" Height="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="Dashboard" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="BookOpenPageVariant" Width="24" Height="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="Derslerim" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="RobotOutline" Width="24" Height="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="AI Asistan" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FileDocument" Width="24" Height="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="Dökümanlar" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CalendarBlank" Width="24" Height="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="Planlayıcı" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Video" Width="24" Height="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="Video Oynatıcı" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ClipboardListOutline" Width="24" Height="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="Sınav Simülasyonu" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </ListBoxItem>
+
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Cog" Width="24" Height="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="Ayarlar" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </DockPanel>
+        </Border>
+
+        <!-- Main Content (Column 1) -->
+        <DockPanel Grid.Column="1">
+            
+            <!-- Top Bar -->
+            <materialDesign:ColorZone Mode="Standard" 
+                                     Background="{DynamicResource SlateDarkBrush}"
+                                     Padding="16" 
+                                     DockPanel.Dock="Top"
+                                     materialDesign:ElevationAssist.Elevation="Dp4">
+                <DockPanel>
+                    <!-- Menu Toggle (Hidden for now as sidebar is permanent) -->
+                    <ToggleButton x:Name="MenuToggleButton"
+                                DockPanel.Dock="Left"
+                                IsChecked="False"
+                                Width="40"
+                                Height="40"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Visibility="Collapsed">
+                        <materialDesign:PackIcon Kind="Menu" Width="24" Height="24"/>
+                    </ToggleButton>
+
+                    <!-- Title -->
+                    <TextBlock x:Name="PageTitle"
+                              Text="Dashboard" 
+                              FontSize="22" 
+                              FontWeight="Bold" 
+                              VerticalAlignment="Center" 
+                              Margin="20,0,0,0"
+                              DockPanel.Dock="Left"/>
+
+                    <!-- Window Controls -->
+                    <StackPanel Orientation="Horizontal" 
+                               DockPanel.Dock="Right" 
+                               HorizontalAlignment="Right">
+                        <Button Click="MinimizeButton_Click"
+                               Width="40" 
+                               Height="40"
+                               Background="Transparent"
+                               BorderThickness="0">
+                            <materialDesign:PackIcon Kind="WindowMinimize"/>
+                        </Button>
+                        <Button Click="MaximizeButton_Click"
+                               Width="40" 
+                               Height="40"
+                               Background="Transparent"
+                               BorderThickness="0">
+                            <materialDesign:PackIcon Kind="WindowMaximize"/>
+                        </Button>
+                        <Button Click="CloseButton_Click"
+                               Width="40" 
+                               Height="40"
+                               Background="Transparent"
+                               BorderThickness="0">
+                            <materialDesign:PackIcon Kind="Close"/>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:ColorZone>
+
+            <!-- Content Frame -->
+            <Frame x:Name="MainFrame" 
+                  NavigationUIVisibility="Hidden"
+                  Background="{DynamicResource MaterialDesignPaper}"/>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,179 @@
+3:02:48 Memory Pressure: Critical
+3:02:50 Tab2 StartNav28 #typed
+3:02:50 Tab2 FinishNav28
+3:02:50 Tab2 StartNav29 #renderer-script #auto_subframe
+3:02:50 Tab2 FinishNav29
+3:02:50 Tab2 PageLoad #pdf
+3:02:50 Tab2 PageLoad #pdf
+3:02:51 PDF.LoadSuccess
+3:03:02 Tab2 StartNav33 #typed
+3:03:02 Tab2 FinishNav33
+3:03:02 Tab2 PageLoad
+3:03:03 Memory Pressure: Critical
+3:03:07 Tab2 StartNav34 #typed
+3:03:07 Tab2 FinishNav34
+3:03:07 Tab2 StartNav35 #renderer-script #auto_subframe
+3:03:07 Tab2 FinishNav35
+3:03:07 Tab2 PageLoad #pdf
+3:03:07 Tab2 PageLoad #pdf
+3:03:07 PDF.LoadSuccess
+3:04:09 Tab2 StartNav39 #typed
+3:04:09 Tab2 FinishNav39
+3:04:09 Tab2 PageLoad
+3:04:10 Memory Pressure: Critical
+3:04:12 Tab2 StartNav40 #typed
+3:04:12 Tab2 FinishNav40
+3:04:12 Tab2 StartNav41 #renderer-script #auto_subframe
+3:04:12 Tab2 FinishNav41
+3:04:12 Tab2 PageLoad #pdf
+3:04:12 Tab2 PageLoad #pdf
+3:04:12 PDF.LoadSuccess
+3:04:40 Tab2 StartNav45 #typed
+3:04:40 Tab2 FinishNav45
+3:04:40 Tab2 PageLoad
+3:04:41 Memory Pressure: Critical
+3:05:10 Tab2 StartNav46 #typed
+3:05:10 Tab2 FinishNav46
+3:05:10 Tab2 StartNav47 #renderer-script #auto_subframe
+3:05:10 Tab2 FinishNav47
+3:05:10 Tab2 PageLoad #pdf
+3:05:10 Tab2 PageLoad #pdf
+3:05:11 PDF.LoadSuccess
+3:11:56 Tab2 StartNav51 #typed
+3:11:56 Tab2 FinishNav51
+3:11:56 Tab2 PageLoad
+3:11:57 Memory Pressure: Critical
+3:12:03 Tab2 StartNav52 #typed
+3:12:03 Tab2 FinishNav52
+3:12:03 Tab2 StartNav53 #renderer-script #auto_subframe
+3:12:03 Tab2 FinishNav53
+3:12:03 Tab2 PageLoad #pdf
+3:12:03 Tab2 PageLoad #pdf
+3:12:04 PDF.LoadSuccess
+3:12:46 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
+0:00:00 Startup
+0:00:00 Microsoft.DeleteProfileHelper.CleanUpEphemeralProfiles
+0:00:00 Microsoft.DeleteProfileHelper.CleanUpDeletedProfiles
+0:00:00 Microsoft.NewBrowser_Popup
+0:00:00 Microsoft.BrowserList.AddBrowser
+0:00:00 Browser1 Insert active Tab1 at 0
+0:00:00 Tab1 StartNav1 #auto_toplevel
+0:00:00 Tab1 StartNav2 #typed
+0:00:00 Tab1 FinishNav1
+0:00:00 Tab1 PageLoad
+0:00:00 Tab1 FinishNav2
+0:00:00 Tab1 PageLoad
+0:00:07 Microsoft.NewBrowser_Popup
+0:00:07 Microsoft.BrowserList.AddBrowser
+0:00:07 Browser2 Insert active Tab2 at 0
+0:00:07 Tab2 StartNav3 #auto_toplevel
+0:00:07 Tab2 StartNav4 #typed
+0:00:07 Tab2 FinishNav3
+0:00:07 Tab2 PageLoad
+0:00:07 Tab2 FinishNav4
+0:00:07 Tab2 PageLoad
+1:08:47 Microsoft.NewBrowser_Popup
+1:08:47 Microsoft.BrowserList.AddBrowser
+1:08:47 Browser3 Insert active Tab3 at 0
+1:08:47 Tab3 StartNav5 #auto_toplevel
+1:08:47 Tab3 StartNav6 #typed
+1:08:47 Tab3 FinishNav5
+1:08:47 Tab3 PageLoad
+1:08:47 Tab3 FinishNav6
+1:08:47 Tab3 PageLoad
+1:08:49 Microsoft.NewBrowser_Popup
+1:08:49 Microsoft.BrowserList.AddBrowser
+1:08:49 Browser4 Insert active Tab4 at 0
+1:08:49 Tab4 StartNav7 #auto_toplevel
+1:08:49 Tab4 StartNav8 #typed
+1:08:49 Tab4 FinishNav7
+1:08:49 Tab4 PageLoad
+1:08:49 Tab4 FinishNav8
+1:08:49 Tab4 PageLoad
+1:09:16 Tab4 StartNav9 #typed
+1:09:16 Tab4 FinishNav9
+1:09:16 Tab4 StartNav10 #renderer-script #auto_subframe
+1:09:16 Tab4 FinishNav10
+1:09:16 Tab4 PageLoad #pdf
+1:09:16 Tab4 PageLoad #pdf
+1:09:16 PDF.LoadSuccess
+1:10:11 Microsoft.Clipboard.WriteText
+1:15:44 Microsoft.NewBrowser_Popup
+1:15:44 Microsoft.BrowserList.AddBrowser
+1:15:44 Browser5 Insert active Tab5 at 0
+1:15:44 Tab5 StartNav14 #auto_toplevel
+1:15:44 Tab5 StartNav15 #typed
+1:15:44 Tab5 FinishNav14
+1:15:44 Tab5 PageLoad
+1:15:44 Tab5 FinishNav15
+1:15:44 Tab5 PageLoad
+1:15:53 Tab5 StartNav16 #typed
+1:15:53 Tab5 FinishNav16
+1:15:53 Tab5 StartNav17 #renderer-script #auto_subframe
+1:15:53 Tab5 FinishNav17
+1:15:53 Tab5 PageLoad #pdf
+1:15:53 Tab5 PageLoad #pdf
+1:15:53 PDF.LoadSuccess
+1:54:44 Tab5 StartNav21 #typed
+1:54:44 Tab5 FinishNav21
+1:54:44 Tab5 PageLoad
+1:54:48 Tab5 StartNav22 #typed
+1:54:48 Tab5 FinishNav22
+1:54:48 Tab5 StartNav23 #renderer-script #auto_subframe
+1:54:48 Tab5 FinishNav23
+1:54:48 Tab5 PageLoad #pdf
+1:54:48 Tab5 PageLoad #pdf
+1:54:48 PDF.LoadSuccess
+1:54:58 Tab5 StartNav27 #typed
+1:54:58 Tab5 FinishNav27
+1:54:58 Tab5 PageLoad
+1:55:00 Tab5 StartNav28 #typed
+1:55:00 Tab5 FinishNav28
+1:55:00 Tab5 StartNav29 #renderer-script #auto_subframe
+1:55:00 Tab5 FinishNav29
+1:55:00 Tab5 PageLoad #pdf
+1:55:00 Tab5 PageLoad #pdf
+1:55:00 PDF.LoadSuccess
+2:47:10 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
+0:00:00 Startup
+0:00:00 Microsoft.DeleteProfileHelper.CleanUpEphemeralProfiles
+0:00:00 Microsoft.DeleteProfileHelper.CleanUpDeletedProfiles
+0:00:00 Microsoft.NewBrowser_Popup
+0:00:00 Microsoft.BrowserList.AddBrowser
+0:00:00 Browser1 Insert active Tab1 at 0
+0:00:00 Tab1 StartNav1 #auto_toplevel
+0:00:00 Tab1 StartNav2 #typed
+0:00:00 Tab1 FinishNav1
+0:00:00 Tab1 PageLoad
+0:00:00 Tab1 FinishNav2
+0:00:00 Tab1 PageLoad
+0:00:04 Microsoft.NewBrowser_Popup
+0:00:04 Microsoft.BrowserList.AddBrowser
+0:00:04 Browser2 Insert active Tab2 at 0
+0:00:04 Tab2 StartNav3 #auto_toplevel
+0:00:04 Tab2 StartNav4 #typed
+0:00:04 Tab2 FinishNav3
+0:00:04 Tab2 PageLoad
+0:00:04 Tab2 FinishNav4
+0:00:04 Tab2 PageLoad
+0:00:04 Memory Pressure: Moderate
+0:00:05 Microsoft.NewBrowser_Popup
+0:00:05 Microsoft.BrowserList.AddBrowser
+0:00:05 Browser3 Insert active Tab3 at 0
+0:00:05 Tab3 StartNav5 #auto_toplevel
+0:00:05 Tab3 StartNav6 #typed
+0:00:05 Tab3 FinishNav5
+0:00:05 Tab3 PageLoad
+0:00:05 Tab3 FinishNav6
+0:00:05 Tab3 PageLoad
+0:00:14 Memory Pressure: Moderate
+0:00:20 Microsoft.NewBrowser_Popup
+0:00:20 Microsoft.BrowserList.AddBrowser
+0:00:20 Browser4 Insert active Tab4 at 0
+0:00:20 Tab4 StartNav7 #auto_toplevel
+0:00:20 Tab4 StartNav8 #typed
+0:00:20 Tab4 FinishNav7
+0:00:20 Tab4 PageLoad
+0:00:20 Tab4 FinishNav8
+0:00:20 Tab4 PageLoad
+0:00:21 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp

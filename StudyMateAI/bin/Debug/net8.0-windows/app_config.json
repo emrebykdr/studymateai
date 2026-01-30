@@ -1,0 +1,7 @@
+{
+  "DocumentModel": "glm-4.7:cloud",
+  "ChatModel": "glm-4.7:cloud",
+  "VideoModel": "glm-4.7:cloud",
+  "GeneralModel": "glm-4.7:cloud",
+  "OllamaModel": "glm-4.7:cloud"
+}

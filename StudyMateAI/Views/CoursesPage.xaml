@@ -1,0 +1,183 @@
+<Page x:Class="StudyMateAI.Views.CoursesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Title="Derslerim">
+    
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                   From="0" To="1" Duration="0:0:0.4"
+                                   EasingFunction="{StaticResource EaseOut}"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: Course List -->
+            <materialDesign:Card Grid.Column="0" Margin="0,0,16,0" Padding="24" Background="{DynamicResource SlateDarkBrush}">
+                <StackPanel>
+                    <Grid Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Derslerim" 
+                                      Style="{StaticResource H2}"/>
+                            <TextBlock Text="Dönem derslerini yönet" 
+                                      Style="{StaticResource Subtitle}"/>
+                        </StackPanel>
+
+                        <!-- Add Course Button (Moved to Header) -->
+                        <Button Grid.Column="1"
+                               Content="YENİ DERS EKLE" 
+                               Click="AddCourseButton_Click"
+                               Style="{DynamicResource NeonGlowButton}"
+                               HorizontalAlignment="Right"/>
+                    </Grid>
+
+
+
+                    <!-- Courses DataGrid -->
+                    <DataGrid x:Name="CoursesDataGrid"
+                             AutoGenerateColumns="False"
+                             CanUserAddRows="False"
+                             IsReadOnly="True"
+                             SelectionMode="Single"
+                             SelectionChanged="CoursesDataGrid_SelectionChanged">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource GlassBorderBrush}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ders Adı" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Kod" Binding="{Binding Code}" Width="100"/>
+                            <DataGridTextColumn Header="Kredi" Binding="{Binding Credit}" Width="60"/>
+                            <DataGridTextColumn Header="Vize" Binding="{Binding MidtermGrade}" Width="60"/>
+                            <DataGridTextColumn Header="Gerekli Final" Binding="{Binding RequiredFinalGrade}" Width="100"/>
+                            <DataGridTemplateColumn Header="İşlemler" Width="150">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="Düzenle" 
+                                                   Background="Transparent"
+                                                   BorderThickness="0"
+                                                   Foreground="{DynamicResource PrimaryHueMidBrush}"
+                                                   Click="EditCourseButton_Click"
+                                                   Tag="{Binding Id}"
+                                                   Margin="0,0,5,0"/>
+                                            <Button Content="Sil" 
+                                                   Background="Transparent"
+                                                   BorderThickness="0"
+                                                   Foreground="Red"
+                                                   Click="DeleteCourseButton_Click"
+                                                   Tag="{Binding Id}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Right: Final Calculator -->
+            <StackPanel Grid.Column="1">
+                
+                <!-- Calculator Card -->
+                <materialDesign:Card Padding="24" Margin="0,0,0,16" Background="{DynamicResource SlateDarkBrush}">
+                    <StackPanel>
+                        <TextBlock Text="Final Hesaplayıcı" 
+                                  Style="{StaticResource H2}"/>
+                         <TextBlock Text="Hedef notunu belirle" 
+                                  Style="{StaticResource Subtitle}"
+                                  Margin="0,0,0,24"/>
+
+                        <TextBlock Text="Ders Seç:" 
+                                  FontSize="12" 
+                                  Opacity="0.7" 
+                                  Margin="0,0,0,5"/>
+                        <TextBlock x:Name="SelectedCourseText" 
+                                  Text="Lütfen bir ders seçin" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold" 
+                                  Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Vize Notu:" 
+                                  FontSize="12" 
+                                  Opacity="0.7" 
+                                  Margin="0,0,0,5"/>
+                        <TextBlock x:Name="MidtermGradeText" 
+                                  Text="-" 
+                                  FontSize="20" 
+                                  FontWeight="Bold" 
+                                  Margin="0,0,0,15"/>
+
+                        <Separator Margin="0,10,0,10"/>
+
+                        <TextBlock Text="Geçmek için gereken final notu:" 
+                                  Style="{StaticResource Caption}"
+                                  Margin="0,0,0,4"/>
+                        <TextBlock x:Name="RequiredFinalText" 
+                                  Text="-" 
+                                  FontSize="32" 
+                                  FontWeight="Bold" 
+                                  Foreground="{DynamicResource SecondaryHueMidBrush}" 
+                                  Margin="0,0,0,10"/>
+
+                        <TextBlock x:Name="PassStatusText" 
+                                  Text="" 
+                                  FontSize="12" 
+                                  TextWrapping="Wrap" 
+                                  Margin="0,0,0,15"/>
+
+                        <Separator Margin="0,10,0,10"/>
+
+                        <!-- Grade Scenarios -->
+                        <TextBlock Text="Not Senaryoları:" 
+                                  FontSize="14" 
+                                  FontWeight="SemiBold" 
+                                  Margin="0,0,0,10"/>
+
+                        <StackPanel x:Name="GradeScenariosPanel">
+                            <!-- Will be populated dynamically -->
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <!-- Info Card -->
+                <materialDesign:Card Padding="15" Background="{DynamicResource SlateDarkBrush}">
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="InformationOutline" 
+                                                Width="24" 
+                                                Height="24" 
+                                                HorizontalAlignment="Center"
+                                                Margin="0,0,0,10"/>
+                        <TextBlock Text="Formül: (Vize × %40) + (Final × %60) ≥ 60" 
+                                  FontSize="11" 
+                                  TextAlignment="Center" 
+                                  TextWrapping="Wrap" 
+                                  Opacity="0.7"/>
+                    </StackPanel>
+                </materialDesign:Card>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

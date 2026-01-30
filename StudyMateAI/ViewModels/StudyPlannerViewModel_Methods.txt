@@ -1,0 +1,69 @@
+        private void DeletePlan()
+        {
+            if (SelectedPlan == null) return;
+            
+            var result = MessageBox.Show($"'{SelectedPlan.Subject}' planını ve tüm görevlerini silmek istediğinize emin misiniz?", 
+                "Planı Sil", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            
+            if (result == MessageBoxResult.Yes)
+            {
+                _databaseService.DeleteStudyPlan(SelectedPlan.Id);
+                Plans.Remove(SelectedPlan);
+                SelectedPlan = Plans.FirstOrDefault();
+                LoadWeeklySchedule();
+            }
+        }
+
+        private async Task DistributeToWeek()
+        {
+            if (SelectedPlan == null) return;
+            
+            IsGenerating = true;
+            try
+            {
+                var tasks = _databaseService.GetTasksForPlan(SelectedPlan.Id);
+                
+                if (!tasks.Any())
+                {
+                    MessageBox.Show("Bu planda görev yok!", "Uyarı");
+                    return;
+                }
+                
+                double totalHours = tasks.Sum(t => t.EstimatedHours);
+                int studyDays = Math.Min(5, (int)Math.Ceiling(totalHours / 2.0));
+                double hoursPerDay = totalHours / studyDays;
+                
+                var today = DateTime.Today;
+                int daysFromMonday = ((int)today.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+                var monday = today.AddDays(-daysFromMonday);
+                
+                var existingSchedules = _databaseService.GetScheduleForWeek(monday);
+                foreach (var s in existingSchedules.Where(x => x.StudyPlanId == SelectedPlan.Id))
+                {
+                    _databaseService.DeleteDailySchedule(s.Id);
+                }
+                
+                for (int i = 0; i < studyDays; i++)
+                {
+                    var schedule = new DailySchedule
+                    {
+                        Date = monday.AddDays(i),
+                        StudyPlanId = SelectedPlan.Id,
+                        PlannedMinutes = (int)(hoursPerDay * 60),
+                        IsCompleted = false
+                    };
+                    _databaseService.AddDailySchedule(schedule);
+                }
+                
+                LoadWeeklySchedule();
+                MessageBox.Show($"Plan {studyDays} güne dağıtıldı (günde ~{hoursPerDay:F1} saat)", "Başarılı");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hata: {ex.Message}", "Hata");
+            }
+            finally
+            {
+                IsGenerating = false;
+            }
+        }

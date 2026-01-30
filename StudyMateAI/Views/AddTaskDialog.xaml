@@ -1,0 +1,40 @@
+<Window x:Class="StudyMateAI.Views.AddTaskDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Görev Ekle" Height="250" Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="{DynamicResource MaterialDesignPaper}">
+    
+    <Border BorderBrush="{DynamicResource PrimaryHueMidBrush}" BorderThickness="1">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Yeni Görev Ekle" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
+
+            <StackPanel Grid.Row="1">
+                <TextBox x:Name="TopicTextBox" 
+                         materialDesign:HintAssist.Hint="Görev / Konu Adı"
+                         Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,16"/>
+                
+                <TextBox x:Name="HoursTextBox" 
+                         materialDesign:HintAssist.Hint="Tahmini Süre (Saat)"
+                         Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                         Text="1.0"
+                         PreviewTextInput="NumberValidationTextBox"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                <Button Content="İptal" IsCancel="True" Style="{DynamicResource MaterialDesignOutlinedButton}" Margin="0,0,8,0"/>
+                <Button Content="Ekle" IsDefault="True" Click="Ok_Click" Style="{DynamicResource NeonGlowButton}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

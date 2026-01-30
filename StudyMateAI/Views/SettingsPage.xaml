@@ -1,0 +1,294 @@
+<Page x:Class="StudyMateAI.Views.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="Ayarlar">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30" MaxWidth="800">
+            <!-- Header -->
+            <TextBlock Text="Ayarlar" 
+                      FontSize="32" 
+                      FontWeight="Bold" 
+                      Margin="0,0,0,30"/>
+
+            <!-- Ollama Settings -->
+            <materialDesign:Card Padding="24" Margin="0,0,0,16" Background="{DynamicResource SlateDarkBrush}">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <materialDesign:PackIcon Kind="Robot" 
+                                               Width="28" 
+                                               Height="28" 
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        <TextBlock Text="Ollama Ayarları" 
+                                 FontSize="20" 
+                                 FontWeight="SemiBold"
+                                 Margin="12,0,0,0"
+                                 VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBox materialDesign:HintAssist.Hint="Ollama URL"
+                            Text="http://localhost:11434"
+                            Margin="0,0,0,16"
+                            IsReadOnly="True"
+                            Style="{DynamicResource MaterialDesignOutlinedTextBox}"/>
+
+                    <!-- Model Inputs StackPanel -->
+                    <StackPanel>
+                        <!-- Document Model -->
+                        <TextBlock Text="Döküman Modeli (Özetleme, Anahtar Kelime, Zihin Haritası)" 
+                                   FontWeight="SemiBold" Margin="0,0,0,4"/>
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" 
+                                     x:Name="DocumentModelTextBox"
+                                     materialDesign:HintAssist.Hint="Örn: qwen3-vl:235b-cloud"
+                                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"/>
+                            <materialDesign:PackIcon Grid.Column="1" 
+                                                   x:Name="DocumentModelStatusIcon" 
+                                                   Kind="CheckCircle" 
+                                                   Foreground="Green" 
+                                                   Visibility="Collapsed" 
+                                                   VerticalAlignment="Center" 
+                                                   Margin="8,0,0,0"
+                                                   Width="24" Height="24"/>
+                        </Grid>
+
+                        <!-- Chat Model -->
+                        <TextBlock Text="AI Asistan Modeli (Genel Sohbet, Soru-Cevap)" 
+                                   FontWeight="SemiBold" Margin="0,0,0,4"/>
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" 
+                                     x:Name="ChatModelTextBox"
+                                     materialDesign:HintAssist.Hint="Örn: qwen3-vl:235b-cloud"
+                                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"/>
+                            <materialDesign:PackIcon Grid.Column="1" 
+                                                   x:Name="ChatModelStatusIcon" 
+                                                   Kind="CheckCircle" 
+                                                   Foreground="Green" 
+                                                   Visibility="Collapsed" 
+                                                   VerticalAlignment="Center" 
+                                                   Margin="8,0,0,0"
+                                                   Width="24" Height="24"/>
+                        </Grid>
+                        
+                        <!-- Video Model -->
+                        <TextBlock Text="YouTube Modeli (Video Özeti, Görsel Analizi)" 
+                                   FontWeight="SemiBold" Margin="0,0,0,4"/>
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" 
+                                     x:Name="VideoModelTextBox"
+                                     materialDesign:HintAssist.Hint="Örn: qwen2.5-vl (Görsel yetenekli model önerilir)"
+                                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"/>
+                            <materialDesign:PackIcon Grid.Column="1" 
+                                                   x:Name="VideoModelStatusIcon" 
+                                                   Kind="CheckCircle" 
+                                                   Foreground="Green" 
+                                                   Visibility="Collapsed" 
+                                                   VerticalAlignment="Center" 
+                                                   Margin="8,0,0,0"
+                                                   Width="24" Height="24"/>
+                        </Grid>
+
+                        <!-- General Model -->
+                        <TextBlock Text="Genel İşler Modeli (Sınav Raporu, Planlama)" 
+                                   FontWeight="SemiBold" Margin="0,0,0,4"/>
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                     x:Name="GeneralModelTextBox"
+                                     materialDesign:HintAssist.Hint="Örn: qwen3-vl:235b-cloud"
+                                     Margin="0,0,8,0"
+                                     VerticalAlignment="Center"
+                                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"/>
+                            <materialDesign:PackIcon Grid.Column="1" 
+                                                   x:Name="GeneralModelStatusIcon" 
+                                                   Kind="CheckCircle" 
+                                                   Foreground="Green" 
+                                                   Visibility="Collapsed" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,16,0"
+                                                   Width="24" Height="24"/>
+                            <Button Grid.Column="2"
+                                    x:Name="SaveButton"
+                                    Content="Kaydet"
+                                    Click="SaveModel_Click"
+                                    Style="{DynamicResource NeonGlowButton}"
+                                    Width="100"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <materialDesign:PackIcon Kind="CheckCircle" 
+                                               Width="20" 
+                                               Height="20"
+                                               Foreground="Green"
+                                               VerticalAlignment="Center"/>
+                        <TextBlock Text="Ollama bağlantısı aktif" 
+                                 Margin="8,0,0,0"
+                                 VerticalAlignment="Center"
+                                 Opacity="1.0"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Appearance Settings -->
+            <materialDesign:Card Padding="24" Margin="0,0,0,16" Background="{DynamicResource SlateDarkBrush}">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <materialDesign:PackIcon Kind="Palette" 
+                                               Width="28" 
+                                               Height="28" 
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        <TextBlock Text="Görünüm" 
+                                 FontSize="20" 
+                                 FontWeight="SemiBold"
+                                 Margin="12,0,0,0"
+                                 VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Karanlık Tema" 
+                                     FontSize="16"
+                                     FontWeight="Medium"/>
+                            <TextBlock Text="Arayüz temasını değiştir" 
+                                     FontSize="12"
+                                     Opacity="0.9"
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                        <ToggleButton Grid.Column="1"
+                                    IsChecked="True"
+                                    VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Database Settings -->
+            <materialDesign:Card Padding="24" Margin="0,0,0,16" Background="{DynamicResource SlateDarkBrush}">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <materialDesign:PackIcon Kind="Database" 
+                                               Width="28" 
+                                               Height="28" 
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        <TextBlock Text="Veritabanı" 
+                                 FontSize="20" 
+                                 FontWeight="SemiBold"
+                                 Margin="12,0,0,0"
+                                 VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Tüm verilerinizi temizlemek için aşağıdaki butonu kullanın."
+                             TextWrapping="Wrap"
+                             Opacity="0.9"
+                             Margin="0,0,0,16"/>
+
+                    <Button HorizontalAlignment="Left"
+                           Background="Transparent"
+                           BorderBrush="{StaticResource NeonCoralBrush}"
+                           BorderThickness="1"
+                           Foreground="{StaticResource NeonCoralBrush}"
+                           Style="{DynamicResource MaterialDesignOutlinedButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="DeleteSweep" Margin="0,0,8,0"/>
+                            <TextBlock Text="Veritabanını Temizle" Foreground="{StaticResource NeonCoralBrush}"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- About -->
+            <materialDesign:Card Padding="24" Background="{DynamicResource SlateDarkBrush}">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <materialDesign:PackIcon Kind="Information" 
+                                               Width="28" 
+                                               Height="28" 
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        <TextBlock Text="Hakkında" 
+                                 FontSize="20" 
+                                 FontWeight="SemiBold"
+                                 Margin="12,0,0,0"
+                                 VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" 
+                                 Text="Uygulama:" 
+                                 FontWeight="SemiBold"
+                                 Margin="0,0,16,8"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" 
+                                 Text="StudyMate AI"
+                                 Margin="0,0,0,8"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" 
+                                 Text="Versiyon:" 
+                                 FontWeight="SemiBold"
+                                 Margin="0,0,16,8"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" 
+                                 Text="1.0.0"
+                                 Margin="0,0,0,8"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" 
+                                 Text="Framework:" 
+                                 FontWeight="SemiBold"
+                                 Margin="0,0,16,8"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" 
+                                 Text=".NET 8.0 WPF"
+                                 Margin="0,0,0,8"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" 
+                                 Text="AI Model:" 
+                                 FontWeight="SemiBold"
+                                 Margin="0,0,16,0"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" 
+                                 Text="Ollama (ministral-3:3b)"/>
+                    </Grid>
+
+                    <Separator Margin="0,16"/>
+
+                    <TextBlock Text="StudyMate AI, öğrencilerin ders çalışmalarını kolaylaştırmak için geliştirilmiş yapay zeka destekli bir asistanıdır."
+                             TextWrapping="Wrap"
+                             Opacity="0.8"
+                             Margin="0,16,0,0"/>
+                </StackPanel>
+            </materialDesign:Card>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

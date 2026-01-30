@@ -1,0 +1,323 @@
+<Page x:Class="StudyMateAI.Views.ExamPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:StudyMateAI.Views"
+      xmlns:vm="clr-namespace:StudyMateAI.ViewModels"
+      xmlns:helpers="clr-namespace:StudyMateAI.Helpers"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1000"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Title="ExamPage">
+    
+    <Page.DataContext>
+        <vm:ExamViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
+    </Page.Resources>
+
+    <Grid Background="{DynamicResource MaterialDesignPaper}" Margin="24">
+        
+        <!-- Loading Overlay -->
+        <Grid Panel.ZIndex="100" 
+              Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+              Background="#AA000000">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" 
+                             IsIndeterminate="True" 
+                             Value="0" Width="50" Height="50"/>
+                <TextBlock Text="{Binding LoadingMessage}" Margin="0,20,0,0" FontSize="16" FontWeight="SemiBold"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- SETUP VIEW -->
+        <Grid Visibility="{Binding IsSetupView, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Sınav Simülasyonu" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Configuration Panel -->
+                <materialDesign:Card Margin="0,0,10,0" Padding="16" VerticalAlignment="Top" Background="{DynamicResource SlateDarkBrush}">
+                    <StackPanel>
+                        <TextBlock Text="Sınav Ayarları" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,16"/>
+
+                        <TextBlock Text="Sınav Tipi" Margin="0,0,0,4" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                        <ComboBox SelectedItem="{Binding ExamType}" Style="{DynamicResource MaterialDesignOutlinedComboBox}" Background="#1E293B" Margin="0,0,0,16">
+                            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Test</sys:String>
+                            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Klasik</sys:String>
+                        </ComboBox>
+
+                        <TextBlock Text="Zorluk Seviyesi" Margin="0,0,0,4" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                        <ComboBox SelectedItem="{Binding Difficulty}" Style="{DynamicResource MaterialDesignOutlinedComboBox}" Background="#1E293B" Margin="0,0,0,16">
+                            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Kolay</sys:String>
+                            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Orta</sys:String>
+                            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Zor</sys:String>
+                        </ComboBox>
+
+                        <TextBlock Text="{Binding QuestionCount, StringFormat='Soru Sayısı: {0}'}" Margin="0,0,0,4" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                        <Slider Minimum="1" Maximum="20" Value="{Binding QuestionCount}" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,16"/>
+
+                        <Button Command="{Binding StartExamCommand}" Content="SINAVI BAŞLAT" Style="{DynamicResource NeonGlowButton}" Height="50" Margin="0,20,0,0"/>
+
+                        <TextBlock Text="Not: 'Klasik' modda cevaplarınız yapay zeka tarafından değerlendirilip puanlanacaktır." 
+                                   TextWrapping="Wrap" Margin="0,16,0,0" FontStyle="Italic" Foreground="{DynamicResource MaterialDesignBodyLight}" FontSize="12"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <!-- Source Selection Panel -->
+                <materialDesign:Card Grid.Column="1" Margin="10,0,0,0" Padding="16" Background="{DynamicResource SlateDarkBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Text="Kaynak Seçimi" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,16"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <RadioButton Content="Videolar" IsChecked="{Binding IsVideosSelected}" GroupName="SourceType" Margin="0,0,16,0"/>
+                                <RadioButton Content="Dökümanlar" IsChecked="{Binding IsVideosSelected, Converter={StaticResource InvertBooleanConverter}}" GroupName="SourceType"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Video List -->
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Videos}" SelectedItem="{Binding SelectedSource}"
+                                 Visibility="{Binding IsVideosSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                 Background="Transparent" BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,4">
+                                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding DateAdded}" FontSize="11" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- Document List -->
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedSource}"
+                                 Background="Transparent" BorderThickness="0">
+                             <ListBox.Style>
+                                <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsVideosSelected}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.Style>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,4">
+                                        <TextBlock Text="{Binding FileName}" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding UploadedAt}" FontSize="11" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+
+        <!-- QUIZ VIEW -->
+        <Grid Visibility="{Binding IsQuizView, Converter={StaticResource BooleanToVisibilityConverter}}">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <TextBlock Text="Soru " FontSize="16" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                    <TextBlock Text="{Binding CurrentQuestionIndex}" 
+                              FontWeight="Bold" 
+                              FontSize="18"
+                              Foreground="{DynamicResource CyberTealBrush}"/>
+                    <TextBlock Text="{Binding TotalQuestions, StringFormat='/{0}'}" 
+                              FontSize="16"
+                              Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                </StackPanel>
+                <Button Content="Sınavı Bitir" HorizontalAlignment="Right" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding NextQuestionCommand}"/>  
+                <!-- NextQuestionCommand will verify logic to skip to end if user wants? No, just finish current -->
+            </Grid>
+
+            <materialDesign:Card Grid.Row="1" Padding="24" Margin="30,0" Background="{DynamicResource SlateDarkBrush}">
+                <ScrollViewer>
+                    <StackPanel>
+                        <TextBlock Text="{Binding CurrentQuestion.Question}" FontSize="20" TextWrapping="Wrap" Margin="0,0,0,24"/>
+
+                        <!-- Options for TEST -->
+                        <ItemsControl ItemsSource="{Binding CurrentQuestion.Options}">
+                             <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ExamType}" Value="Test">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <RadioButton GroupName="Options" Content="{Binding}" Margin="0,8" FontSize="16">
+                                        <!-- Need binding for selection index. Simplified for now -->
+                                        <RadioButton.Command>
+                                            <Binding Path="DataContext.SubmitAnswerCommand" RelativeSource="{RelativeSource AncestorType=Page}"/>
+                                        </RadioButton.Command>
+                                        <RadioButton.CommandParameter>
+                                            <Binding/>
+                                        </RadioButton.CommandParameter>
+                                    </RadioButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- Input for CLASSIC -->
+                        <StackPanel>
+                             <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ExamType}" Value="Klasik">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            
+                            <TextBox Text="{Binding CurrentQuestion.UserAnswerText, UpdateSourceTrigger=PropertyChanged}" 
+                                     AcceptsReturn="True" Height="100" VerticalScrollBarVisibility="Auto"
+                                     materialDesign:HintAssist.Hint="Cevabınızı buraya yazın..."
+                                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                                     Background="#1E293B"
+                                     Margin="0,0,0,16"/>
+                            
+                            <Button Content="CEVABI DEĞERLENDİR" 
+                                    HorizontalAlignment="Right" 
+                                    Command="{Binding EvalulateOpenEndedCommand}"
+                                    Style="{DynamicResource NeonGlowButton}"
+                                    IsEnabled="{Binding CurrentQuestion.IsEvaluated, Converter={StaticResource InvertBooleanConverter}}"/>
+
+                            <!-- Feedback Area -->
+                            <Border Background="{DynamicResource SlateDarkBrush}" BorderBrush="{DynamicResource PrimaryHueMidBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,20,0,0">
+                                 <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CurrentQuestion.IsEvaluated}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <StackPanel>
+                                    <TextBlock Text="Yapay Zeka Değerlendirmesi" FontWeight="Bold" Foreground="#1976D2" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding CurrentQuestion.Score, StringFormat='Puan: {0}/100'}" FontSize="18" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding CurrentQuestion.Feedback}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </materialDesign:Card>
+
+            <Button Grid.Row="2" Content="SIRADAKİ SORU" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,20,30,0" 
+                    Width="150"
+                    Style="{DynamicResource NeonGlowButton}"
+                    Command="{Binding NextQuestionCommand}"/>
+        </Grid>
+
+        <!-- RESULT VIEW -->
+        <Grid Visibility="{Binding IsResultView, Converter={StaticResource BooleanToVisibilityConverter}}">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Sınav Sonucu" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+
+            <!-- Score Card -->
+            <materialDesign:Card Grid.Row="1" Padding="32" HorizontalAlignment="Center" Margin="0,0,0,30" Background="{DynamicResource SlateDarkBrush}">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Toplam Puan" FontSize="16" HorizontalAlignment="Center" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                    <TextBlock Text="{Binding Report.Score, StringFormat='{}{0:F0}'}" FontSize="64" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryHueMidBrush}"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Analysis -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <materialDesign:Card Margin="0,0,10,0" Padding="16" Background="{DynamicResource SlateDarkBrush}">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <TextBlock Text="Genel Değerlendirme" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                            <TextBlock Text="{Binding Report.OverallAssessment}" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                            
+                            <TextBlock Text="Zayıf Konular" FontSize="16" FontWeight="SemiBold" Foreground="#D32F2F" Margin="0,0,0,8"/>
+                            <ItemsControl ItemsSource="{Binding Report.WeakTopics}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding StringFormat='• {0}'}" Margin="0,2"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Column="1" Margin="10,0,0,0" Padding="16" Background="{DynamicResource SlateDarkBrush}">
+                     <ScrollViewer>
+                        <StackPanel>
+                            <TextBlock Text="Çalışma Tavsiyeleri" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                            <ItemsControl ItemsSource="{Binding Report.Recommendations}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{DynamicResource SlateDarkBrush}" Padding="8" Margin="0,0,0,8" CornerRadius="4" BorderBrush="{DynamicResource GlassBorderBrush}" BorderThickness="1">
+                                            <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </materialDesign:Card>
+            </Grid>
+            
+            <Button Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                    Content="YENİ SINAV" Command="{Binding ResetExamCommand}" Margin="0,0,0,0"
+                    Style="{DynamicResource NeonGlowButton}"
+                    Width="150"/>
+
+        </Grid>
+
+    </Grid>
+</Page>
