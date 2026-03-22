@@ -3,10 +3,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:helpers="clr-namespace:StudyMateAI.Helpers"
+      TextElement.Foreground="{DynamicResource TextPrimaryBrush}"
       Title="AI Asistan">
     <Page.Resources>
         <helpers:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <materialDesign:ColorZone Grid.Row="0" materialDesign:ElevationAssist.Elevation="Dp4" Background="{DynamicResource SlateDarkBrush}" Padding="16">
+        <Border Grid.Row="0" Background="{DynamicResource BgSurfaceBrush}" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="0,0,0,1" Padding="24,16">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -23,47 +25,40 @@
                 </Grid.ColumnDefinitions>
                 
                 <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="Robot" 
-                                           Width="32" 
-                                           Height="32" 
-                                           VerticalAlignment="Center"
-                                           Margin="0,0,12,0"/>
+                    <Border Background="{DynamicResource AccentDarkBrush}" CornerRadius="8" Padding="8" Margin="0,0,16,0">
+                        <materialDesign:PackIcon Kind="Robot" Width="24" Height="24" Foreground="{DynamicResource AccentLightBrush}"/>
+                    </Border>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="AI Asistan" 
-                                 FontSize="20" 
-                                 FontWeight="Bold"/>
-                        <TextBlock Text="Ollama ile güçlendirilmiştir" 
-                                 FontSize="12" 
-                                 Opacity="0.8"/>
+                        <TextBlock Text="AI Asistan" Style="{StaticResource H2}" Margin="0,0,0,2"/>
+                        <TextBlock Text="Ollama ile güçlendirilmiştir" Style="{StaticResource Caption}"/>
                     </StackPanel>
                 </StackPanel>
 
                 <Button Grid.Column="1"
-                        Background="Transparent"
-                        BorderThickness="0"
+                        Style="{DynamicResource IconButton}"
                         ToolTip="Geçmişi Temizle"
                         Command="{Binding ClearHistoryCommand}">
-                    <materialDesign:PackIcon Kind="DeleteSweep" Width="24" Height="24"/>
+                    <materialDesign:PackIcon Kind="DeleteSweep" Width="24" Height="24" Foreground="{DynamicResource DangerBrush}"/>
                 </Button>
             </Grid>
-        </materialDesign:ColorZone>
+        </Border>
 
         <!-- Messages Area -->
         <ScrollViewer Grid.Row="1" 
-                     x:Name="MessageScrollViewer"
-                     VerticalScrollBarVisibility="Auto"
-                     Padding="16">
+                      x:Name="MessageScrollViewer"
+                      VerticalScrollBarVisibility="Auto"
+                      Padding="24">
             <ItemsControl ItemsSource="{Binding Messages}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="0,0,0,16">
+                        <StackPanel Margin="0,0,0,24">
                             <!-- User Message -->
-                            <Border Background="{DynamicResource PrimaryHueMidBrush}"
-                                   CornerRadius="12"
-                                   Padding="12"
-                                   MaxWidth="500"
-                                   HorizontalAlignment="Right"
-                                   Margin="50,0,0,8">
+                            <Border Background="{DynamicResource AccentDarkBrush}"
+                                    CornerRadius="16,16,0,16"
+                                    Padding="16,12"
+                                    MaxWidth="600"
+                                    HorizontalAlignment="Right"
+                                    Margin="64,0,0,8">
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -75,43 +70,54 @@
                                     </Style>
                                 </Border.Style>
                                 <TextBlock Text="{Binding UserMessage}"
-                                         TextWrapping="Wrap"
-                                         Foreground="White"
-                                         FontSize="14"/>
+                                           TextWrapping="Wrap"
+                                           Foreground="White"
+                                           FontSize="14"/>
                             </Border>
 
                             <!-- AI Response -->
-                            <Border Background="{DynamicResource SlateDarkBrush}"
-                                   CornerRadius="12"
-                                   Padding="12"
-                                   MaxWidth="500"
-                                   HorizontalAlignment="Left"
-                                   materialDesign:ElevationAssist.Elevation="Dp2"
-                                   Margin="0,0,50,0">
-                                <Border.Style>
-                                    <Style TargetType="Border">
+                            <StackPanel HorizontalAlignment="Left" MaxWidth="700">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding AIResponse, Converter={StaticResource NullToVisibilityConverter}}" Value="Visible">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsError}" Value="True">
-                                                <Setter Property="Background" Value="#B00020"/>
-                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </Border.Style>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding AIResponse}"
-                                             TextWrapping="Wrap"
-                                             FontSize="14"/>
-                                    <TextBlock Text="{Binding Timestamp, StringFormat='HH:mm'}"
-                                             FontSize="10"
-                                             Opacity="0.6"
-                                             Margin="0,4,0,0"
-                                             HorizontalAlignment="Right"/>
-                                </StackPanel>
-                            </Border>
+                                </StackPanel.Style>
+                                
+                                <Border Background="{DynamicResource BgCardBrush}"
+                                        BorderBrush="{DynamicResource BgBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="16,16,16,0"
+                                        Padding="16,12"
+                                        Margin="0,0,64,0">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsError}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource DangerBrush}"/>
+                                                    <Setter Property="Background" Value="#2D1117"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding AIResponse}"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="14"
+                                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                                   LineHeight="22"/>
+                                    </StackPanel>
+                                </Border>
+                                <TextBlock Text="{Binding Timestamp, StringFormat='HH:mm'}"
+                                           FontSize="11"
+                                           Foreground="{DynamicResource TextMutedBrush}"
+                                           Margin="8,4,0,0"
+                                           HorizontalAlignment="Left"/>
+                            </StackPanel>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -120,8 +126,8 @@
 
         <!-- Loading Indicator -->
         <StackPanel Grid.Row="1"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
             <StackPanel.Style>
                 <Style TargetType="StackPanel">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -133,49 +139,50 @@
                 </Style>
             </StackPanel.Style>
             <ProgressBar IsIndeterminate="True"
-                        Width="48"
-                        Height="48"/>
+                         Width="48"
+                         Height="48"
+                         Foreground="{DynamicResource AccentBrush}"/>
             <TextBlock Text="AI düşünüyor..."
-                      Margin="0,8,0,0"
-                      FontSize="14"
-                      Opacity="0.7"/>
+                       Margin="0,16,0,0"
+                       FontSize="14"
+                       Foreground="{DynamicResource TextSecondaryBrush}"/>
         </StackPanel>
 
         <!-- Input Area -->
-        <materialDesign:Card Grid.Row="2" 
-                            Background="{DynamicResource SlateDarkBrush}" 
-                            Margin="16"
-                            Padding="8">
+        <Border Grid.Row="2" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="0,1,0,0" Padding="24,16">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="16"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0"
-                        x:Name="InputTextBox"
-                        Text="{Binding UserInput, UpdateSourceTrigger=PropertyChanged}"
-                        materialDesign:HintAssist.Hint="Mesajınızı yazın..."
-                        Style="{DynamicResource MaterialDesignOutlinedTextBox}"
-                        AcceptsReturn="False"
-                        MaxLength="2000"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Padding="8">
-                    <TextBox.InputBindings>
-                        <KeyBinding Key="Return" Command="{Binding SendMessageCommand}"/>
-                    </TextBox.InputBindings>
-                </TextBox>
+                <Border Grid.Column="0" Background="{DynamicResource BgDeepBrush}" CornerRadius="24" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="1" Padding="16,4">
+                    <TextBox x:Name="InputTextBox"
+                             Text="{Binding UserInput, UpdateSourceTrigger=PropertyChanged}"
+                             materialDesign:HintAssist.Hint="Mesajınızı yazın..."
+                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                             BorderThickness="0"
+                             AcceptsReturn="False"
+                             MaxLength="2000"
+                             VerticalAlignment="Center"
+                             FontSize="14"
+                             Background="Transparent">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Return" Command="{Binding SendMessageCommand}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </Border>
 
-                <Button Grid.Column="1"
-                       Width="40" Height="40"
-                       Command="{Binding SendMessageCommand}"
-                       Style="{DynamicResource NeonGlowButton}"
-                       ToolTip="Gönder (Enter)"
-                       Margin="8,0,0,0">
-                    <materialDesign:PackIcon Kind="Send" Width="20" Height="20" Foreground="#0B1120"/>
+                <Button Grid.Column="2"
+                        Width="48" Height="48"
+                        Command="{Binding SendMessageCommand}"
+                        Style="{DynamicResource NeonGlowButton}"
+                        ToolTip="Gönder (Enter)"
+                        Padding="0">
+                    <materialDesign:PackIcon Kind="Send" Width="20" Height="20" Foreground="{DynamicResource TextPrimaryBrush}" Margin="4,0,0,0"/>
                 </Button>
             </Grid>
-        </materialDesign:Card>
+        </Border>
     </Grid>
 </Page>

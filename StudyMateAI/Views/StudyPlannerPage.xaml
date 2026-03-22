@@ -4,18 +4,20 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.Foreground="{DynamicResource TextPrimaryBrush}"
       xmlns:local="clr-namespace:StudyMateAI.Views" 
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1000"
       Title="Çalışma Planlayıcı">
       
-    <Grid Margin="16">
-        <Grid.Resources>
-            <BooleanToVisibilityConverter x:Key="LocalBoolToVis"/>
-        </Grid.Resources>
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="LocalBoolToVis"/>
+        <local:TimerTextConverter x:Key="TimerTextConverter"/>
+    </Page.Resources>
+    <Grid Margin="32">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="24"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
@@ -23,250 +25,228 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="32"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-        <!-- LEFT PANEL: Create & List Plans -->
-        <Grid Grid.Column="0" Margin="0,0,16,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!-- Create New Plan -->
-            <materialDesign:Card Grid.Row="0" Margin="0,0,0,16" Padding="16" Background="{DynamicResource SlateDarkBrush}">
-                <StackPanel>
-                    <TextBlock Text="Yeni Çalışma Planı" FontWeight="Bold" Margin="0,0,0,8"/>
-                    <TextBox Text="{Binding InputTopics, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{DynamicResource MaterialDesignOutlinedTextBox}"
-                             materialDesign:HintAssist.Hint="Konuları Giriniz (virgülle ayırın)"
-                             AcceptsReturn="True"
-                             Height="60"
-                             Background="#1E293B"
-                             VerticalScrollBarVisibility="Auto"
-                             Margin="0,0,0,8"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Command="{Binding GeneratePlanCommand}" 
-                                Content="{Binding GenerateButtonText}"
-                                Margin="0,0,8,0" 
-                                Style="{DynamicResource NeonGlowButton}"/>
-                        <Button Command="{Binding AddManualPlanCommand}" Content="Manuel Ekle"
-                                Style="{DynamicResource MaterialDesignOutlinedButton}"
-                                ToolTip="Yapay zeka kullanmadan direkt ekle"/>
-                    </StackPanel>
-                </StackPanel>
-            </materialDesign:Card>
-
-            <TextBlock Grid.Row="1" Text="Planlarım" FontSize="18" FontWeight="Bold" Margin="0,0,0,8"/>
-
-            <!-- List of Plans -->
-            <ListBox Grid.Row="2" ItemsSource="{Binding Plans}" SelectedItem="{Binding SelectedPlan}" Background="Transparent">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,4">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="{Binding Subject}" FontWeight="Bold"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding TotalTargetHours}" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
-                                    <TextBlock Text=" Saat Hedef" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
-                                    <TextBlock Text=" | " Foreground="{DynamicResource MaterialDesignBodyLight}"/>
-                                    <TextBlock Text="{Binding StartDate, StringFormat=dd.MM.yyyy}" Foreground="{DynamicResource MaterialDesignBodyLight}"/>
-                                </StackPanel>
-                            </StackPanel>
-                            
-                            <!-- Inline Buttons for Plan -->
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                                <Button Command="{Binding DataContext.CompletePlanCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                                        CommandParameter="{Binding}"
-                                        Style="{DynamicResource MaterialDesignIconForegroundButton}"
-                                        ToolTip="Planı Tamamla (Arşivle)"
-                                        Width="30" Height="30" Padding="0">
-                                    <materialDesign:PackIcon Kind="Check" />
-                                </Button>
-                                <Button Command="{Binding DataContext.DeletePlanCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                                        CommandParameter="{Binding}"
-                                        Style="{DynamicResource MaterialDesignIconForegroundButton}"
-                                        ToolTip="Planı Sil"
-                                        Foreground="Red"
-                                        Width="30" Height="30" Padding="0">
-                                    <materialDesign:PackIcon Kind="Delete" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
-
-        <!-- RIGHT PANEL: Timer & Tasks -->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!-- Active Focus UI -->
-            <materialDesign:Card Grid.Row="0" Margin="0,0,0,16" Background="{DynamicResource SlateDarkBrush}" Padding="20">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock Text="Şu An Çalışılan Konu" Opacity="0.7"/>
-                        <TextBlock Text="{Binding SelectedTask.Topic, TargetNullValue='Listeden bir görev seçin...'}" 
-                                   FontSize="24" FontWeight="Bold" TextWrapping="Wrap"/>
-                         <TextBlock Text="{Binding SelectedTask.Status}" FontSize="12" Margin="0,4,0,0"/>
-
-                         <!-- Management Buttons for Selected Task -->
-                         <StackPanel Orientation="Horizontal" Margin="0,12,0,0" 
-                                     Visibility="{Binding SelectedTask, Converter={StaticResource LocalBoolToVis}}">
-                              <Button Command="{Binding CompleteTaskCommand}" 
-                                      Content="Tamamla" 
-                                      Style="{DynamicResource MaterialDesignFlatButton}"
-                                      Margin="0,0,8,0"/>
-                              <Button Command="{Binding DeleteTaskCommand}" 
-                                      Content="Görevi Sil" 
-                                      Style="{DynamicResource MaterialDesignFlatButton}" 
-                                      Foreground="Red"/>
-                         </StackPanel>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding TimerDisplay}" FontSize="40" FontFamily="Consolas" HorizontalAlignment="Center"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
-                            <Button Command="{Binding ToggleTimerCommand}" Margin="0,0,8,0" Padding="16,8">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Timer" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                                    <TextBlock>
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="Text" Value="Başlat"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsTimerRunning}" Value="True">
-                                                        <Setter Property="Text" Value="Durdur"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-                            <Button Command="{Binding SaveSessionCommand}" Content="Kaydet"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </materialDesign:Card>
-
-            <!-- Tasks List -->
-            <Grid Grid.Row="1">
+            <!-- LEFT PANEL: Create & List Plans -->
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="16"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
-                <Grid Grid.Row="0" Margin="0,0,0,8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Görevler / Konular" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
-                    
-                    <!-- Manual Task Add Button (Requires a dialog or input area, using simple input for now or just a button that opens dialog?) 
-                         User asked to add manually. I'll add a small input area above the list if needed, or a button. 
-                         Let's add a button 'Görev Ekle' which opens a small dialog or is bound to a new command.
-                         I'll add a text box and '+' button here for quick entry -->
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
-                         <!-- Plan Management (moved from inline) -->
-                         <Button Command="{Binding DeletePlanCommand}" Content="Planı Sil" 
-                                 Style="{DynamicResource MaterialDesignOutlinedButton}" 
-                                 Foreground="Red" BorderBrush="Red" Margin="0,0,16,0"
-                                 Visibility="{Binding SelectedPlan, Converter={StaticResource LocalBoolToVis}}"/>
 
-                         <Button Command="{Binding DistributeToWeekCommand}" Content="Haftaya Dağıt" 
-                                 Style="{DynamicResource MaterialDesignOutlinedButton}" 
-                                 Margin="0,0,16,0"
-                                 Visibility="{Binding SelectedPlan, Converter={StaticResource LocalBoolToVis}}"/>
-                                 
-                         <Button Command="{Binding OpenAddTaskDialogCommand}" Content="+ Görev Ekle"/>
+                <!-- Create New Plan -->
+                <Border Grid.Row="0" Padding="20" CornerRadius="8" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Yeni Çalışma Planı" Style="{StaticResource H2}" Margin="0,0,0,16"/>
+                        <TextBox Text="{Binding InputTopics, UpdateSourceTrigger=PropertyChanged}"
+                                 materialDesign:HintAssist.Hint="Konuları Giriniz (virgülle ayırın)..."
+                                 AcceptsReturn="True"
+                                 Height="80"
+                                 TextWrapping="Wrap"
+                                 VerticalScrollBarVisibility="Auto"
+                                 Margin="0,0,0,16"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Command="{Binding GeneratePlanCommand}" 
+                                    Content="{Binding GenerateButtonText}"
+                                    Style="{DynamicResource NeonGlowButton}"
+                                    Margin="0,0,8,0"/>
+                            <Button Command="{Binding AddManualPlanCommand}" 
+                                    Content="Manuel Ekle"
+                                    Style="{DynamicResource SecondaryButton}"
+                                    ToolTip="Yapay zeka kullanmadan direkt ekle"/>
+                        </StackPanel>
                     </StackPanel>
-                </Grid>
-                
-                
-                <ListBox Grid.Row="1" ItemsSource="{Binding CurrentPlanTasks}" SelectedItem="{Binding SelectedTask}" Background="Transparent">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,8" Cursor="Hand">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/> <!-- Status Icon -->
-                                    <ColumnDefinition Width="*"/>    <!-- Details -->
-                                    <ColumnDefinition Width="Auto"/> <!-- Progress -->
-                                </Grid.ColumnDefinitions>
+                </Border>
 
-                                <materialDesign:PackIcon Kind="Book" Height="24" Width="24" VerticalAlignment="Center" Margin="0,0,16,0" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                <TextBlock Grid.Row="2" Text="Planlarım" Style="{StaticResource H2}"/>
 
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="{Binding Topic}" FontWeight="Bold" FontSize="15"/>
-                                    <ProgressBar Value="{Binding CompletedHours}" Maximum="{Binding EstimatedHours}" Height="6" Margin="0,4,8,0"/>
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <TextBlock>
-                                        <Run Text="{Binding CompletedHours, StringFormat=F1}"/>
-                                        <Run Text="/"/>
-                                        <Run Text="{Binding EstimatedHours, StringFormat=F1}"/>
-                                        <Run Text=" Saat"/>
-                                    </TextBlock>
-                                    <!-- Inline Buttons for Task -->
-                                    <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
-                                        <Button Command="{Binding DataContext.CompleteTaskCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                                                CommandParameter="{Binding}"
-                                                Style="{DynamicResource MaterialDesignIconForegroundButton}"
-                                                ToolTip="Tamamla"
-                                                Width="30" Height="30" Padding="0">
-                                            <materialDesign:PackIcon Kind="Check" />
-                                        </Button>
-                                        <Button Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                                                CommandParameter="{Binding}"
-                                                Style="{DynamicResource MaterialDesignIconForegroundButton}"
-                                                ToolTip="Sil"
-                                                Foreground="Red"
-                                                Width="30" Height="30" Padding="0">
-                                            <materialDesign:PackIcon Kind="Delete" />
-                                        </Button>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <!-- List of Plans -->
+                <Border Grid.Row="4" CornerRadius="8" Background="{DynamicResource BgSurfaceBrush}" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="1">
+                    <ListBox ItemsSource="{Binding Plans}" SelectedItem="{Binding SelectedPlan}" Background="Transparent" BorderThickness="0" Margin="4">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="12,12" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="0,0,0,1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Subject}" FontSize="15" FontWeight="SemiBold"/>
+                                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                <TextBlock Text="{Binding TotalTargetHours}" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                                <TextBlock Text=" Saat Hedef" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                                <TextBlock Text=" • " Foreground="{DynamicResource TextMutedBrush}" Margin="4,0"/>
+                                                <TextBlock Text="{Binding StartDate, StringFormat=dd.MM.yyyy}" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button Command="{Binding DataContext.CompletePlanCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource IconButton}"
+                                                    ToolTip="Planı Tamamla (Arşivle)"
+                                                    Margin="0,0,4,0">
+                                                <materialDesign:PackIcon Kind="Check" Width="20" Height="20" Foreground="{DynamicResource SuccessBrush}"/>
+                                            </Button>
+                                            <Button Command="{Binding DataContext.DeletePlanCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource IconButton}"
+                                                    ToolTip="Planı Sil">
+                                                <materialDesign:PackIcon Kind="Delete" Width="20" Height="20" Foreground="{DynamicResource DangerBrush}"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
             </Grid>
-        </Grid>
+
+            <!-- RIGHT PANEL: Timer & Tasks -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Active Focus UI -->
+                <Border Grid.Row="0" Padding="24" CornerRadius="8" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="ŞU AN ÇALIŞILAN KONU" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}" Margin="0,0,0,8"/>
+                            <TextBlock Text="{Binding SelectedTask.Topic, TargetNullValue='Listeden bir görev seçin...'}" 
+                                       FontSize="24" FontWeight="Bold" Foreground="{DynamicResource AccentLightBrush}" TextWrapping="Wrap" Margin="0,0,0,4"/>
+                            <TextBlock Text="{Binding SelectedTask.Status}" FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,16,0,0" 
+                                        Visibility="{Binding SelectedTask, Converter={StaticResource LocalBoolToVis}}">
+                                <Button Command="{Binding CompleteTaskCommand}" 
+                                        Content="Görevi Tamamla" 
+                                        Style="{DynamicResource SecondaryButton}"
+                                        Margin="0,0,12,0"/>
+                                <Button Command="{Binding DeleteTaskCommand}" 
+                                        Content="Sil" 
+                                        Style="{DynamicResource DangerButton}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding TimerDisplay}" FontSize="48" FontWeight="Bold" FontFamily="Consolas" HorizontalAlignment="Center" Margin="0,0,0,16"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Command="{Binding ToggleTimerCommand}" Margin="0,0,12,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Timer" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding IsTimerRunning, Converter={StaticResource TimerTextConverter}, FallbackValue=Başlat}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Command="{Binding SaveSessionCommand}" Content="Kaydet" Style="{DynamicResource SecondaryButton}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Tasks List -->
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Plan Görevleri" Style="{StaticResource H2}" VerticalAlignment="Center"/>
+                        
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Button Command="{Binding DistributeToWeekCommand}" Content="Haftaya Dağıt" 
+                                    Style="{DynamicResource OutlinedButton}" 
+                                    Margin="0,0,12,0"
+                                    Visibility="{Binding SelectedPlan, Converter={StaticResource LocalBoolToVis}}"/>
+                            <Button Command="{Binding OpenAddTaskDialogCommand}" Content="+ Görev Ekle" Style="{DynamicResource NeonGlowButton}"/>
+                        </StackPanel>
+                    </Grid>
+                    
+                    <Border Grid.Row="2" CornerRadius="8" Background="{DynamicResource BgSurfaceBrush}" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="1">
+                        <ListBox ItemsSource="{Binding CurrentPlanTasks}" SelectedItem="{Binding SelectedTask}" Background="Transparent" BorderThickness="0" Margin="4">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,4" Padding="16,12" Background="{DynamicResource BgCardBrush}" CornerRadius="6" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="1" Cursor="Hand">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/> 
+                                                <ColumnDefinition Width="*"/>    
+                                                <ColumnDefinition Width="Auto"/> 
+                                            </Grid.ColumnDefinitions>
+
+                                            <Border Grid.Column="0" Width="40" Height="40" CornerRadius="4" Background="{DynamicResource BgSurfaceBrush}" Margin="0,0,16,0">
+                                                <materialDesign:PackIcon Kind="Book" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource AccentBrush}"/>
+                                            </Border>
+
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Topic}" FontWeight="SemiBold" FontSize="15" Margin="0,0,0,6"/>
+                                                <ProgressBar Value="{Binding CompletedHours}" Maximum="{Binding EstimatedHours}" Height="6" Background="{DynamicResource BgSurfaceBrush}" Foreground="{DynamicResource SuccessBrush}"/>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="24,0,0,0">
+                                                <TextBlock VerticalAlignment="Center" Margin="0,0,16,0" Foreground="{DynamicResource TextSecondaryBrush}">
+                                                    <Run Text="{Binding CompletedHours, StringFormat=F1}" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                                    <Run Text="/"/>
+                                                    <Run Text="{Binding EstimatedHours, StringFormat=F1}"/>
+                                                    <Run Text=" Saat"/>
+                                                </TextBlock>
+                                                
+                                                <Button Command="{Binding DataContext.CompleteTaskCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
+                                                        CommandParameter="{Binding}"
+                                                        Style="{DynamicResource IconButton}"
+                                                        ToolTip="Tamamla"
+                                                        Margin="0,0,4,0">
+                                                    <materialDesign:PackIcon Kind="Check" Width="20" Height="20" Foreground="{DynamicResource SuccessBrush}"/>
+                                                </Button>
+                                                <Button Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
+                                                        CommandParameter="{Binding}"
+                                                        Style="{DynamicResource IconButton}"
+                                                        ToolTip="Sil">
+                                                    <materialDesign:PackIcon Kind="Delete" Width="20" Height="20" Foreground="{DynamicResource DangerBrush}"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Grid>
+            </Grid>
         </Grid>
         
         <!-- Weekly Schedule Section -->
-        <materialDesign:Card Grid.Row="1" Margin="0,16,0,0" Padding="16" Background="{DynamicResource SlateDarkBrush}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+        <Border Grid.Row="2" Padding="24" CornerRadius="8" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BgBorderBrush}" BorderThickness="1">
+            <StackPanel>
+                <TextBlock Text="Haftalık Program" Style="{StaticResource H2}" Margin="0,0,0,16"/>
                 
-                <TextBlock Grid.Row="0" Text="Haftalık Program" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"/>
-                
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding WeeklySchedule}">
+                <ItemsControl ItemsSource="{Binding WeeklySchedule}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                            <Border BorderBrush="{DynamicResource BgBorderBrush}" 
                                     BorderThickness="0,0,0,1" 
-                                    Padding="8"
+                                    Padding="16,12"
                                     AllowDrop="True"
                                     Drop="DayItem_Drop"
                                     DragOver="DayItem_DragOver"
@@ -282,32 +262,27 @@
                                     </Grid.ColumnDefinitions>
                                     
                                     <TextBlock Grid.Column="0" Text="{Binding DayName}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding DateDisplay}" Foreground="{DynamicResource MaterialDesignBodyLight}" VerticalAlignment="Center" FontSize="11"/>
-                                    <TextBlock Grid.Column="2" 
-                                               Text="{Binding DisplayName}" 
-                                               VerticalAlignment="Center" 
-                                               FontWeight="Medium"
-                                               TextTrimming="CharacterEllipsis"
-                                               ToolTip="{Binding DisplayName}"/>
-                                    <TextBlock Grid.Column="3" Text="{Binding HoursDisplay}" VerticalAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                    <CheckBox Grid.Column="4" IsChecked="{Binding IsCompleted}" Content="✓" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding DateDisplay}" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" FontSize="12"/>
+                                    
+                                    <Border Grid.Column="2" Background="{DynamicResource BgSurfaceBrush}" CornerRadius="4" Padding="8,4" Margin="0,0,16,0">
+                                        <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" ToolTip="{Binding DisplayName}"/>
+                                    </Border>
+                                    
+                                    <TextBlock Grid.Column="3" Text="{Binding HoursDisplay}" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource AccentDarkBrush}"/>
+                                    <CheckBox Grid.Column="4" IsChecked="{Binding IsCompleted}" Content="✓" VerticalAlignment="Center" Margin="0,0,12,0"/>
                                     <Button Grid.Column="5" 
                                             Command="{Binding DataContext.DeleteScheduleCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                             CommandParameter="{Binding}"
-                                            Content="🗑"
-                                            Width="28"
-                                            Height="24"
-                                            Padding="0"
-                                            Margin="8,0,0,0"
-                                            ToolTip="Programı Sil"/>
+                                            Style="{DynamicResource IconButton}"
+                                            ToolTip="Temizle">
+                                        <materialDesign:PackIcon Kind="Close" Width="18" Height="18" Foreground="{DynamicResource DangerBrush}"/>
+                                    </Button>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </Grid>
-        </materialDesign:Card>
+            </StackPanel>
+        </Border>
     </Grid>
-    
-
 </Page>

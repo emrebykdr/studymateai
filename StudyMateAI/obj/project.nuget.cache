@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EBFaplyEBpg=",
+  "dgSpecHash": "2g//eC+0usE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\emre1\\Desktop\\StudyMateAI_Backup_20260103_1512\\StudyMateAI\\StudyMateAI.csproj",
+  "projectFilePath": "C:\\Users\\emre1\\Desktop\\Projeler\\StudyMateAi v0.001\\StudyMateAI\\StudyMateAI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\emre1\\.nuget\\packages\\anglesharp\\1.3.0\\anglesharp.1.3.0.nupkg.sha512",
     "C:\\Users\\emre1\\.nuget\\packages\\materialdesigncolors\\3.1.0\\materialdesigncolors.3.1.0.nupkg.sha512",

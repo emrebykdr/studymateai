@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using StudyMateAI.Services;
 using StudyMateAI.Views;
@@ -15,23 +15,22 @@ namespace StudyMateAI
             try
             {
                 InitializeComponent();
-                
-                // Initialize services
                 _databaseService = new DatabaseService();
-                _ollamaService = new OllamaService();
-                
-                // Enable window dragging
-                this.MouseLeftButtonDown += (s, e) => DragMove();
-                
-                // Load default page after UI is ready
+                _ollamaService   = new OllamaService();
                 this.Loaded += MainWindow_Loaded;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"CRITICAL ERROR in MainWindow constructor:\n\n{ex.Message}\n\nInner: {ex.InnerException?.Message}\n\nStack:\n{ex.StackTrace}", 
+                MessageBox.Show($"CRITICAL ERROR:\n\n{ex.Message}\n\n{ex.InnerException?.Message}",
                     "Startup Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown(1);
             }
+        }
+
+        private void DragArea_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+                DragMove();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

@@ -65,4 +65,21 @@ namespace StudyMateAI.Views
             e.Handled = true;
         }
     }
+
+    public class TimerTextConverter : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value is bool isRunning)
+            {
+                return isRunning ? "Durdur" : "Başlat";
+            }
+            return "Başlat";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

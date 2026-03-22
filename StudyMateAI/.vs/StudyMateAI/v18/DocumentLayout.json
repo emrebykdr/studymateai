@@ -1,7 +1,48 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\emre1\\Desktop\\StudyMateAI_Backup_20260103_1512\\StudyMateAI\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\viewmodels\\chatviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:viewmodels\\chatviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\models\\videoresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:models\\videoresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\models\\exammodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:models\\exammodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\models\\studytask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:models\\studytask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\models\\dailyschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:models\\dailyschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\models\\folder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:models\\folder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\models\\studyplan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:models\\studyplan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\models\\studysession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:models\\studysession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|c:\\users\\emre1\\desktop\\studymateai v0.001\\studymateai\\views\\dashboardpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B2F4ED7D-7912-8318-4BDB-8D6C1EDCDAE7}|StudyMateAI.csproj|solutionrelative:views\\dashboardpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +50,140 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ChatViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\ViewModels\\ChatViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\ChatViewModel.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\ViewModels\\ChatViewModel.cs",
+              "RelativeToolTip": "ViewModels\\ChatViewModel.cs",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:02:38.023Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "VideoResource.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\VideoResource.cs",
+              "RelativeDocumentMoniker": "Models\\VideoResource.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\VideoResource.cs",
+              "RelativeToolTip": "Models\\VideoResource.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:02:15.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ExamModels.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\ExamModels.cs",
+              "RelativeDocumentMoniker": "Models\\ExamModels.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\ExamModels.cs",
+              "RelativeToolTip": "Models\\ExamModels.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:01:20.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DailySchedule.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\DailySchedule.cs",
+              "RelativeDocumentMoniker": "Models\\DailySchedule.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\DailySchedule.cs",
+              "RelativeToolTip": "Models\\DailySchedule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:01:27.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StudyTask.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\StudyTask.cs",
+              "RelativeDocumentMoniker": "Models\\StudyTask.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\StudyTask.cs",
+              "RelativeToolTip": "Models\\StudyTask.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:01:23.262Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Folder.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\Folder.cs",
+              "RelativeDocumentMoniker": "Models\\Folder.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\Folder.cs",
+              "RelativeToolTip": "Models\\Folder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:01:18.119Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StudySession.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\StudySession.cs",
+              "RelativeDocumentMoniker": "Models\\StudySession.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\StudySession.cs",
+              "RelativeToolTip": "Models\\StudySession.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:01:16.313Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "StudyPlan.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\StudyPlan.cs",
+              "RelativeDocumentMoniker": "Models\\StudyPlan.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\StudyPlan.cs",
+              "RelativeToolTip": "Models\\StudyPlan.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:01:12.551Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Course.cs",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\Course.cs",
+              "RelativeDocumentMoniker": "Models\\Course.cs",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Models\\Course.cs",
+              "RelativeToolTip": "Models\\Course.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA0wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T15:58:51.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DashboardPage.xaml",
+              "DocumentMoniker": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Views\\DashboardPage.xaml",
+              "RelativeDocumentMoniker": "Views\\DashboardPage.xaml",
+              "ToolTip": "C:\\Users\\emre1\\Desktop\\StudyMateAi v0.001\\StudyMateAI\\Views\\DashboardPage.xaml",
+              "RelativeToolTip": "Views\\DashboardPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-02-02T15:57:50.194Z",
+              "EditorCaption": ""
             }
           ]
         }

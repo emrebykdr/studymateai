@@ -77,6 +77,8 @@
                    Click="CancelButton_Click"
                    Margin="0,0,10,0"
                    Width="100"
+                   Foreground="White"
+                   BorderBrush="#166534"
                    Style="{DynamicResource MaterialDesignOutlinedButton}"/>
             <Button Content="KAYDET" 
                    Click="SaveButton_Click"

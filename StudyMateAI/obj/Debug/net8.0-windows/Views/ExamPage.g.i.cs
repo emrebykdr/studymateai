@@ -58,7 +58,7 @@ namespace StudyMateAI.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/StudyMateAI;V1.0.0.0;component/views/exampage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/StudyMateAI;component/views/exampage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\ExamPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
